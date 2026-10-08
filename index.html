@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashing in Data Structures | Interactive Visual Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&family=Sora:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="theme-cinematic">
+  <!-- Top Navigation & Stage HUD -->
+  <header class="presentation-header" id="presentationHeader">
+    <div class="hud-left">
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <span class="brand-title">HASHING<span class="text-accent">.DSA</span></span>
+      </div>
+      <div class="level-indicator">
+        <span class="level-tag">LEVEL</span>
+        <span class="level-number" id="currentLevelDisplay">01</span>
+        <span class="level-divider">/</span>
+        <span class="level-total" id="totalLevelsDisplay">08</span>
+      </div>
+      <div class="level-breadcrumb" id="levelTitleDisplay">
+        A Real-Life Example
+      </div>
+    </div>
+
+    <!-- Stepper tracker within the active level -->
+    <div class="hud-center">
+      <div class="step-progress-wrapper" id="stepProgressWrapper">
+        <div class="step-track" id="stepTrack">
+          <!-- Step dots populated dynamically -->
+        </div>
+        <span class="step-label" id="stepCounterLabel">Step 1 of 3</span>
+      </div>
+    </div>
+
+    <div class="hud-right">
+      <button class="hud-btn hud-btn-primary" id="fullscreenToggleBtn" title="Full Screen (F)" aria-label="Fullscreen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+        </svg>
+        <span class="btn-text">Full Screen</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Presentation Stage -->
+  <main class="stage-container" id="stageContainer">
+
+    <section class="stage-level active" id="level-1" data-level="1" data-total-steps="3"
+      data-title="A Real-Life Example">
+      <div class="level-canvas">
+
+        <!-- 1. Evaluator Dialogue & Classroom Scene Header -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">👨‍🏫</div>
+            <div class="officer-info">
+              <span class="officer-title">EAMCET COUNSELLING OFFICER</span>
+              <span class="officer-status">Document Verification Desk</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">OFFICER ASKS:</div>
+            <p class="dialogue-text">
+              “Can you give me your <span class="highlight-target-pill">10th Class Mark Memo</span>?”
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. The Physical Document Rack (ALL 5 DOCUMENTS VISIBLE SIDE-BY-SIDE) -->
+        <div class="document-showcase-desk">
+
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">📁 YOUR FILE</span>
+              <h2 class="desk-heading">All certificates are mixed together in this file:</h2>
+            </div>
+            <!-- Dynamic scanning indicator -->
+            <div class="live-scan-indicator" id="liveScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="liveScanText">Ready to search</span>
+            </div>
+          </div>
+
+          <!-- Document Cards Grid (5 distinct cards) -->
+          <div class="documents-grid" id="documentsGrid">
+
+            <!-- Document 1: Aadhaar Card -->
+            <div class="doc-card" id="doc-1" data-doc-name="Aadhaar Card">
+              <div class="doc-tab" style="--tab-bg: #f59e0b;">
+                <span class="tab-number">01</span>
+                <span class="tab-label">Aadhaar Card</span>
+              </div>
+              <div class="doc-sheet">
+                <div class="sheet-top">
+                  <span class="sheet-icon">🇮🇳</span>
+                  <span class="sheet-tag">GOVT ID</span>
+                </div>
+                <h3 class="sheet-title">Aadhaar Card</h3>
+                <div class="sheet-meta">
+                  <div class="meta-row">
+                    <span class="meta-label">ID No:</span>
+                    <span class="meta-val font-mono">XXXX-1234</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-label">Holder:</span>
+                    <span class="meta-val">Student</span>
+                  </div>
+                </div>
+                <div class="doc-status-tag status-idle" id="tag-1">
+                  <span class="status-icon">⚪</span> Waiting
+                </div>
+              </div>
+            </div>
+
+            <!-- Document 2: College TC -->
+            <div class="doc-card" id="doc-2" data-doc-name="College TC">
+              <div class="doc-tab" style="--tab-bg: #3b82f6;">
+                <span class="tab-number">02</span>
+                <span class="tab-label">College TC</span>
+              </div>
+              <div class="doc-sheet">
+                <div class="sheet-top">
+                  <span class="sheet-icon">🎓</span>
+                  <span class="sheet-tag">CERTIFICATE</span>
+                </div>
+                <h3 class="sheet-title">Transfer Cert (TC)</h3>
+                <div class="sheet-meta">
+                  <div class="meta-row">
+                    <span class="meta-label">Ref No:</span>
+                    <span class="meta-val font-mono">TC-44910</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-label">College:</span>
+                    <span class="meta-val">Junior College</span>
+                  </div>
+                </div>
+                <div class="doc-status-tag status-idle" id="tag-2">
+                  <span class="status-icon">⚪</span> Waiting
+                </div>
+              </div>
+            </div>
+
+            <!-- Document 3: 12th Mark Memo -->
+            <div class="doc-card" id="doc-3" data-doc-name="12th Mark Memo">
+              <div class="doc-tab" style="--tab-bg: #8b5cf6;">
+                <span class="tab-number">03</span>
+                <span class="tab-label">12th Mark Memo</span>
+              </div>
+              <div class="doc-sheet">
+                <div class="sheet-top">
+                  <span class="sheet-icon">📜</span>
+                  <span class="sheet-tag">MARKS</span>
+                </div>
+                <h3 class="sheet-title">12th Mark Memo</h3>
+                <div class="sheet-meta">
+                  <div class="meta-row">
+                    <span class="meta-label">Hall Ticket:</span>
+                    <span class="meta-val font-mono">240819402</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-label">Marks:</span>
+                    <span class="meta-val">968 / 1000</span>
+                  </div>
+                </div>
+                <div class="doc-status-tag status-idle" id="tag-3">
+                  <span class="status-icon">⚪</span> Waiting
+                </div>
+              </div>
+            </div>
+
+            <!-- Document 4: TARGET -> 10th Class Mark Memo -->
+            <div class="doc-card target-card" id="doc-4" data-doc-name="10th Mark Memo" data-target="true">
+              <div class="doc-tab" style="--tab-bg: #10b981;">
+                <span class="tab-number">04</span>
+                <span class="tab-label font-bold">10th Mark Memo ★</span>
+              </div>
+              <div class="doc-sheet target-sheet">
+                <div class="sheet-top">
+                  <span class="sheet-icon">🏆</span>
+                  <span class="sheet-tag target-tag">TARGET DOCUMENT</span>
+                </div>
+                <h3 class="sheet-title target-title">10th Mark Memo</h3>
+                <div class="sheet-meta">
+                  <div class="meta-row">
+                    <span class="meta-label">Roll No:</span>
+                    <span class="meta-val font-mono font-bold">2401928310</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-label">GPA:</span>
+                    <span class="meta-val highlight-green">10.0 GPA (Pass)</span>
+                  </div>
+                </div>
+                <div class="doc-status-tag status-idle" id="tag-4">
+                  <span class="status-icon">⚪</span> Target Document
+                </div>
+              </div>
+            </div>
+
+            <!-- Document 5: Bank Docs -->
+            <div class="doc-card" id="doc-5" data-doc-name="Bank Documents">
+              <div class="doc-tab" style="--tab-bg: #64748b;">
+                <span class="tab-number">05</span>
+                <span class="tab-label">Bank Docs</span>
+              </div>
+              <div class="doc-sheet">
+                <div class="sheet-top">
+                  <span class="sheet-icon">🏦</span>
+                  <span class="sheet-tag">FINANCIAL</span>
+                </div>
+                <h3 class="sheet-title">Bank Passbook</h3>
+                <div class="sheet-meta">
+                  <div class="meta-row">
+                    <span class="meta-label">A/C No:</span>
+                    <span class="meta-val font-mono">03810019283</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-label">Bank:</span>
+                    <span class="meta-val">National Bank</span>
+                  </div>
+                </div>
+                <div class="doc-status-tag status-idle" id="tag-5">
+                  <span class="status-icon">⚪</span> Waiting
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- /documents-grid -->
+
+          <!-- Pointer Arrow Track that moves across documents during search -->
+          <div class="pointer-track-container" id="pointerTrack">
+            <div class="search-pointer" id="searchPointer">
+              <div class="pointer-arrow">👆</div>
+              <div class="pointer-badge" id="pointerBadge">CHECKING THIS</div>
+            </div>
+          </div>
+
+        </div> <!-- /document-showcase-desk -->
+
+        <!-- 3. Bottom Action & Concept Discovery Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: The Classroom Question (Default View) -->
+          <div class="card-columns" id="discovery-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="startSearchBtn" onclick="Level1Controller.startSearchAnimation()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Check One by One</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Search Execution Tracker -->
+          <div class="story-card hidden" id="discovery-searching-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="liveSearchDetail">Starting search at Document 1...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="checksCountDisplay">
+                Checking 0 of 4
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Big CS Discovery (Linear Search & Setup for Hashing) -->
+          <div class="story-card hidden" id="discovery-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is <span class="text-gold-glow">LINEAR SEARCH</span></h2>
+                  <p class="concept-subtitle">Checking every document one after another until you find it.</p>
+                </div>
+
+                <!-- Visual Sequence Flow + Next Transition -->
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node rejected">Doc 1 ❌</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node rejected">Doc 2 ❌</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node rejected">Doc 3 ❌</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">Doc 4: Mark Memo 🏆 FOUND!</div>
+                  </div>
+
+                  <!-- Next Level Action -->
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" id="nextLevelBtn"
+                      onclick="PresentationApp.nextStage()">
+                      <span>Next: The Big Problem (Level 02)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scale Contrast: 20 Docs vs 1 Lakh Docs (hooks into Level 02) -->
+              <div class="scale-compare">
+                <div class="scale-seg scale-ok">
+                  <span class="scale-num">20</span>
+                  <span class="scale-label">documents</span>
+                  <span class="scale-verdict">a few seconds ✔</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg scale-bad">
+                  <span class="scale-num">1,00,000</span>
+                  <span class="scale-label">documents</span>
+                  <span class="scale-verdict">one-by-one? hours ✖</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">How do we jump <strong>straight</strong> to the right document?</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 2: IDENTIFY THE PROBLEM (1 LAKH DOCUMENTS)
+         ======================================================== -->
+    <section class="stage-level" id="level-2" data-level="2" data-total-steps="3" data-title="The Big Problem">
+      <div class="level-canvas">
+
+        <!-- 1. Scale Shock Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">🤯</div>
+            <div class="officer-info">
+              <span class="officer-title">SITUATION UPGRADED</span>
+              <span class="officer-status">The file just got huge</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">IMAGINE NOW:</div>
+            <p class="dialogue-text">
+              Instead of 20 → <span class="highlight-target-pill">1,00,000 documents</span> in one big file!
+            </p>
+          </div>
+          <div class="l2-big-count">
+            <span class="l2-count-num font-bold">1,00,000</span>
+            <span class="l2-count-label font-mono">DOCUMENTS</span>
+          </div>
+        </div>
+
+        <!-- 2. Mega File Desk: 400 tiles, each tile = 250 documents -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">🗂️ ONE BIG FILE</span>
+              <h2 class="desk-heading">Every tile below stands for 250 documents:</h2>
+            </div>
+            <div class="live-scan-indicator" id="l2ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l2ScanStatus">Ready to scan</span>
+            </div>
+          </div>
+
+          <!-- 400 tiny document tiles (generated by Level2Controller) -->
+          <div class="l2-tile-grid" id="l2TileGrid"></div>
+
+          <div class="l2-progress-area">
+            <div class="l2-progress-heads">
+              <span class="l2-progress-label font-mono" id="l2CheckedLabel">Checked 0 of 1,00,000</span>
+              <span class="l2-time-chip font-mono" id="l2TimeChip">1 document = 1 second</span>
+            </div>
+            <div class="l2-progress-track">
+              <div class="l2-progress-fill" id="l2ProgressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Bottom Action & Problem Discovery Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: The Classroom Question (Default View) -->
+          <div class="card-columns" id="l2-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l2StartScanBtn" onclick="Level2Controller.startScan()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Scan One by One</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live 1-Lakh Scan Tracker -->
+          <div class="story-card hidden" id="l2-scanning-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l2ScanDetail">Checking documents one by one...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l2EtaDisplay">
+                0s wasted so far
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: Problem Confirmed + Direct-Jump Wish (hooks into Level 03) -->
+          <div class="story-card hidden" id="l2-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">One-by-One <span class="text-gold-glow">DOESN'T SCALE</span></h2>
+                  <p class="concept-subtitle">27+ hours of checking just to find ONE document. There must be a better way!</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">Identify 📄</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">Determine Location 📍</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">Go Directly 🚀</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">Find It 🏆</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>🎓 Finish Presentation</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Time Cost vs Direct Jump -->
+              <div class="scale-compare">
+                <div class="scale-seg scale-bad">
+                  <span class="scale-num">27h 46m</span>
+                  <span class="scale-label">one by one</span>
+                  <span class="scale-verdict">1,00,000 checks ✖</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg scale-ok">
+                  <span class="scale-num">1 jump</span>
+                  <span class="scale-label">direct to location</span>
+                  <span class="scale-verdict">found instantly ✔</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">How do we jump straight to the right document? <strong>HASHING</strong> shows the way →</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 3: WHAT IS HASHING? (DEFINITION & MAPPING DEMO)
+         ======================================================== -->
+    <section class="stage-level" id="level-3" data-level="3" data-total-steps="3" data-title="What is Hashing?">
+      <div class="level-canvas">
+
+        <!-- 1. The Big Question Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">⚙️</div>
+            <div class="officer-info">
+              <span class="officer-title">HASHING DEFINED</span>
+              <span class="officer-status">The core idea, in one line</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">THE BIG QUESTION:</div>
+            <p class="dialogue-text">
+              So, what exactly is <span class="text-gold-glow">HASHING</span>?
+            </p>
+          </div>
+          <div class="l3-equation">
+            <span class="l3-eq-main font-bold">KEY → LOCATION</span>
+            <span class="l3-eq-label font-mono">THE WHOLE PROMISE</span>
+          </div>
+        </div>
+
+        <!-- 2. The Hash Machine Lab: keys go in, documents land in slots -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">⚙️ HASH MACHINE</span>
+              <h2 class="desk-heading">Keys go in — documents land directly in their slots:</h2>
+            </div>
+            <div class="live-scan-indicator" id="l3ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l3ScanStatus">Waiting for keys</span>
+            </div>
+          </div>
+
+          <div class="l3-lab">
+            <!-- Waiting keys -->
+            <div class="l3-sources">
+              <div class="l3-src-doc" id="l3Src-1">
+                <span class="l3-src-icon">🪪</span>
+                <span class="l3-src-body">
+                  <span class="l3-src-name">Aadhaar</span>
+                  <span class="l3-src-key font-mono">key 8891</span>
+                </span>
+                <span class="l3-src-check">✔</span>
+              </div>
+              <div class="l3-src-doc" id="l3Src-2">
+                <span class="l3-src-icon">🎓</span>
+                <span class="l3-src-body">
+                  <span class="l3-src-name">Hall Ticket</span>
+                  <span class="l3-src-key font-mono">key 4027</span>
+                </span>
+                <span class="l3-src-check">✔</span>
+              </div>
+              <div class="l3-src-doc" id="l3Src-3">
+                <span class="l3-src-icon">📜</span>
+                <span class="l3-src-body">
+                  <span class="l3-src-name">Mark Memo</span>
+                  <span class="l3-src-key font-mono">key 1357</span>
+                </span>
+                <span class="l3-src-check">✔</span>
+              </div>
+              <div class="l3-src-doc" id="l3Src-4">
+                <span class="l3-src-icon">🏦</span>
+                <span class="l3-src-body">
+                  <span class="l3-src-name">Passbook</span>
+                  <span class="l3-src-key font-mono">key 2468</span>
+                </span>
+                <span class="l3-src-check">✔</span>
+              </div>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The black box -->
+            <div class="l3-hash-box" id="l3HashBox">
+              <span class="l3-box-icon">⚙️</span>
+              <span class="l3-box-title font-mono">HASH FUNCTION</span>
+              <span class="l3-box-sub font-mono">key → location</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The hash table -->
+            <div class="l3-table">
+              <span class="l3-table-title font-mono">HASH TABLE (slots 0 – 9)</span>
+              <div class="l3-slots">
+                <div class="l3-slot" id="l3Slot-0"><span class="l3-slot-idx">0</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-1"><span class="l3-slot-idx">1</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-2"><span class="l3-slot-idx">2</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-3"><span class="l3-slot-idx">3</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-4"><span class="l3-slot-idx">4</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-5"><span class="l3-slot-idx">5</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-6"><span class="l3-slot-idx">6</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-7"><span class="l3-slot-idx">7</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-8"><span class="l3-slot-idx">8</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l3Slot-9"><span class="l3-slot-idx">9</span><span class="l3-slot-fill"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l3-caption font-mono" id="l3LabCaption">Waiting: drop the keys into the machine…</div>
+        </div>
+
+        <!-- 3. Bottom Action & Definition Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to demo (Default View) -->
+          <div class="card-columns" id="l3-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l3StartMapBtn" onclick="Level3Controller.startMapping()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Map Keys to Locations</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Mapping Tracker -->
+          <div class="story-card hidden" id="l3-mapping-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l3MapDetail">Mapping keys to locations...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l3MapCount">
+                0 of 4 placed
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Definition (Complete) -->
+          <div class="story-card hidden" id="l3-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is <span class="text-gold-glow">HASHING</span></h2>
+                  <p class="concept-subtitle">Mapping keys to specific locations in a hash table using a hash function
+                    — for fast insertion, deletion &amp; searching.</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">🗝️ Key</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">⚙️ Hash Function</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">📍 Location</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>Next: What is a Key? (Level 04)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scanning vs Mapping -->
+              <div class="scale-compare">
+                <div class="scale-seg scale-bad">
+                  <span class="scale-num">Scanning</span>
+                  <span class="scale-label">linear search</span>
+                  <span class="scale-verdict">check one-by-one ✖</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg scale-ok">
+                  <span class="scale-num">Mapping</span>
+                  <span class="scale-label">hashing</span>
+                  <span class="scale-verdict">key → location ✔</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">Before the “how”… what exactly identifies a record? Meet the <strong>KEY</strong>
+                    →</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 4: WHAT IS A KEY? (IDENTIFY THE RECORD)
+         ======================================================== -->
+    <section class="stage-level" id="level-4" data-level="4" data-total-steps="3" data-title="What is a Key?">
+      <div class="level-canvas">
+
+        <!-- 1. The Confusion Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">🗝️</div>
+            <div class="officer-info">
+              <span class="officer-title">THE KEY CONCEPT</span>
+              <span class="officer-status">Identify any record instantly</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">THE CONFUSION:</div>
+            <p class="dialogue-text">
+              Many Aadhaar cards together… <span class="highlight-target-pill">which one is yours?</span>
+            </p>
+          </div>
+          <div class="l4-equation">
+            <span class="l4-eq-main font-bold">ONE KEY = ONE RECORD</span>
+            <span class="l4-eq-label font-mono">UNIQUENESS RULE</span>
+          </div>
+        </div>
+
+        <!-- 2. The Record Rack: identical cards, unique numbers -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">🗂️ SAME PLACE, SAME LOOK</span>
+              <h2 class="desk-heading">Four Aadhaar cards side by side — which one is yours?</h2>
+            </div>
+            <div class="live-scan-indicator" id="l4ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l4ScanStatus">Numbers hidden</span>
+            </div>
+          </div>
+
+          <div class="l4-rack">
+            <div class="l4-rec" id="l4Rec-1">
+              <span class="l4-mine-badge font-mono">MINE ★</span>
+              <span class="l4-rec-photo">👤</span>
+              <span class="l4-rec-name">Aadhaar Card</span>
+              <span class="l4-rec-key font-mono" id="l4Key-1">????</span>
+            </div>
+            <div class="l4-rec" id="l4Rec-2">
+              <span class="l4-mine-badge font-mono">MINE ★</span>
+              <span class="l4-rec-photo">👤</span>
+              <span class="l4-rec-name">Aadhaar Card</span>
+              <span class="l4-rec-key font-mono" id="l4Key-2">????</span>
+            </div>
+            <div class="l4-rec" id="l4Rec-3">
+              <span class="l4-mine-badge font-mono">MINE ★</span>
+              <span class="l4-rec-photo">👤</span>
+              <span class="l4-rec-name">Aadhaar Card</span>
+              <span class="l4-rec-key font-mono" id="l4Key-3">????</span>
+            </div>
+            <div class="l4-rec" id="l4Rec-4">
+              <span class="l4-mine-badge font-mono">MINE ★</span>
+              <span class="l4-rec-photo">👤</span>
+              <span class="l4-rec-name">Aadhaar Card</span>
+              <span class="l4-rec-key font-mono" id="l4Key-4">????</span>
+            </div>
+          </div>
+
+          <!-- Every record type has its own key -->
+          <div class="l4-legend font-mono" id="l4Legend">
+            <span class="l4-leg-item">🪪 Aadhaar → <b>Aadhaar Number</b></span>
+            <span class="l4-leg-item">📜 Mark Memo → <b>Hall Ticket Number</b></span>
+            <span class="l4-leg-item">🏦 Bank Doc → <b>Account Number</b></span>
+          </div>
+
+          <div class="l4-caption font-mono" id="l4LabCaption">Tap “Reveal the Numbers” — looks alone can't tell records apart.</div>
+        </div>
+
+        <!-- 3. Bottom Action & Definition Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to reveal (Default View) -->
+          <div class="card-columns" id="l4-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l4StartRevealBtn" onclick="Level4Controller.startReveal()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Reveal the Numbers</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Reveal Tracker -->
+          <div class="story-card hidden" id="l4-reveal-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l4RevealDetail">Checking each card's number...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l4RevealCount">
+                0 of 4 revealed
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Definition of Key -->
+          <div class="story-card hidden" id="l4-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is a <span class="text-gold-glow">KEY</span></h2>
+                  <p class="concept-subtitle">A value used to identify a particular record — your Aadhaar number, your
+                    hall ticket number, your account number.</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">📄 Record</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">🗝️ Key</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">🎯 Exactly Yours</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>Next: The Hash Function (Level 05)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guessing vs Identifying -->
+              <div class="scale-compare">
+                <div class="scale-seg scale-bad">
+                  <span class="scale-num">Guessing</span>
+                  <span class="scale-label">by appearance</span>
+                  <span class="scale-verdict">which one is mine? ✖</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg scale-ok">
+                  <span class="scale-num">Identify</span>
+                  <span class="scale-label">by key</span>
+                  <span class="scale-verdict">exactly yours ✔</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">Now we can ID the record… but HOW does a key become a <strong>location</strong>?
+                    Meet the HASH FUNCTION →</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 5: THE HASH FUNCTION (KEY 1234 → LOCATION 4)
+         ======================================================== -->
+    <section class="stage-level" id="level-5" data-level="5" data-total-steps="3" data-title="The Hash Function">
+      <div class="level-canvas">
+
+        <!-- 1. The Setup Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">🧮</div>
+            <div class="officer-info">
+              <span class="officer-title">THE HASH FUNCTION</span>
+              <span class="officer-status">Key in, location out</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">THE SETUP:</div>
+            <p class="dialogue-text">
+              My Aadhaar key is <span class="highlight-target-pill">1234</span> — the file holds 10 documents.
+            </p>
+          </div>
+          <div class="l5-equation">
+            <span class="l5-eq-main font-bold">KEY → ? → LOC</span>
+            <span class="l5-eq-label font-mono">HASH FUNCTION MAGIC</span>
+          </div>
+        </div>
+
+        <!-- 2. The Hash Function Lab -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">🧮 HASH FUNCTION LAB</span>
+              <h2 class="desk-heading">Where does key 1234 go? Run the calculation…</h2>
+            </div>
+            <div class="live-scan-indicator" id="l5ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l5ScanStatus">Waiting for the key</span>
+            </div>
+          </div>
+
+          <div class="l3-lab">
+            <!-- The key -->
+            <div class="l5-keycard" id="l5KeyCard">
+              <span class="l5-key-icon">🪪</span>
+              <span class="l5-key-name">My Aadhaar</span>
+              <span class="l5-key-num font-mono font-bold">1234</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The calculation -->
+            <div class="l3-hash-box" id="l5HashBox">
+              <span class="l3-box-icon">⚙️</span>
+              <span class="l3-box-title font-mono">HASH FUNCTION</span>
+              <span class="l5-box-display font-mono" id="l5CalcDisplay">1234 → ? → ?</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The file locations -->
+            <div class="l3-table">
+              <span class="l3-table-title font-mono">FILE LOCATIONS (0 – 9)</span>
+              <div class="l3-slots">
+                <div class="l3-slot" id="l5Slot-0"><span class="l3-slot-idx">0</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-1"><span class="l3-slot-idx">1</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-2"><span class="l3-slot-idx">2</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-3"><span class="l3-slot-idx">3</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-4"><span class="l3-slot-idx">4</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-5"><span class="l3-slot-idx">5</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-6"><span class="l3-slot-idx">6</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-7"><span class="l3-slot-idx">7</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-8"><span class="l3-slot-idx">8</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l5Slot-9"><span class="l3-slot-idx">9</span><span class="l3-slot-fill"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l3-caption font-mono" id="l5LabCaption">Press “Run the Hash Function” — the calculation will decide the location.</div>
+        </div>
+
+        <!-- 3. Bottom Action & Definition Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to calculate (Default View) -->
+          <div class="card-columns" id="l5-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l5StartCalcBtn" onclick="Level5Controller.startCalc()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Run the Hash Function</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Store & Retrieve Tracker -->
+          <div class="story-card hidden" id="l5-calc-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l5CalcDetail">Performing calculation on key 1234...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l5CalcPhase">
+                STORING
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Definition -->
+          <div class="story-card hidden" id="l5-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is the <span class="text-gold-glow">HASH FUNCTION</span></h2>
+                  <p class="concept-subtitle">The calculation that converts a key into a location — run it again and
+                    you land in the same spot every time.</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">🗝️ Key 1234</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">⚙️ Calculation</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">📍 Location 4</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>Next: The Hash Table (Level 06)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scanning vs Calculating -->
+              <div class="scale-compare">
+                <div class="scale-seg scale-bad">
+                  <span class="scale-num">Scanning</span>
+                  <span class="scale-label">linear search</span>
+                  <span class="scale-verdict">check everywhere ✖</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg scale-ok">
+                  <span class="scale-num">Calculate</span>
+                  <span class="scale-label">hash function</span>
+                  <span class="scale-verdict">key → location ✔</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">We know the LOCATION now… but <strong>where does the document actually
+                      sit?</strong> Meet the HASH TABLE →</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 6: THE HASH TABLE (KEY → HASH FUNCTION → POSITION 4 → DOCUMENT)
+         ======================================================== -->
+    <section class="stage-level" id="level-6" data-level="6" data-total-steps="3" data-title="The Hash Table">
+      <div class="level-canvas">
+
+        <!-- 1. The Open Question Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">🗂️</div>
+            <div class="officer-info">
+              <span class="officer-title">THE HASH TABLE</span>
+              <span class="officer-status">Where the document actually lives</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">WE CALCULATED POSITION 4…</div>
+            <p class="dialogue-text">
+              But where do we <span class="highlight-target-pill">actually keep the document?</span>
+            </p>
+          </div>
+          <div class="l6-equation">
+            <span class="l6-eq-main font-bold">4 → ?</span>
+            <span class="l6-eq-label font-mono">WE NEED A PLACE</span>
+          </div>
+        </div>
+
+        <!-- 2. The Hash Table Lab: document slides into Index 4 -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">🗂️ HASH TABLE</span>
+              <h2 class="desk-heading">A table of positions — the document is stored at Index 4:</h2>
+            </div>
+            <div class="live-scan-indicator" id="l6ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l6ScanStatus">Waiting for the document</span>
+            </div>
+          </div>
+
+          <div class="l3-lab l6-lab" id="l6Lab">
+
+            <!-- The physical document waiting on the desk -->
+            <div class="l6-srcdoc" id="l6SrcDoc">
+              <span class="l6-srcdoc-tab font-mono">📄 AADHAAR CARD</span>
+              <span class="l6-srcdoc-title">Aadhaar Document</span>
+              <span class="l6-srcdoc-key font-mono">KEY 1234</span>
+              <span class="l6-srcdoc-state font-mono" id="l6SrcState">READY</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The calculation -->
+            <div class="l3-hash-box" id="l6HashBox">
+              <span class="l3-box-icon">⚙️</span>
+              <span class="l3-box-title font-mono">HASH FUNCTION</span>
+              <span class="l5-box-display font-mono" id="l6CalcDisplay">1234 → ? → ?</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The hash table: Index | Document -->
+            <div class="l6-htable">
+              <span class="l6-htable-title font-mono">HASH TABLE (INDEX 0 – 9)</span>
+              <div class="l6-ht-grid">
+                <div class="l6-ht-head"><span>Index</span><span>Document</span></div>
+                <div class="l6-ht-row" id="l6Row-0"><span class="l6-ht-idx font-mono">0</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-1"><span class="l6-ht-idx font-mono">1</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-2"><span class="l6-ht-idx font-mono">2</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-3"><span class="l6-ht-idx font-mono">3</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row target" id="l6Row-4"><span class="l6-ht-idx font-mono">4</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-5"><span class="l6-ht-idx font-mono">5</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-6"><span class="l6-ht-idx font-mono">6</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-7"><span class="l6-ht-idx font-mono">7</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-8"><span class="l6-ht-idx font-mono">8</span><span class="l6-ht-cell"></span></div>
+                <div class="l6-ht-row" id="l6Row-9"><span class="l6-ht-idx font-mono">9</span><span class="l6-ht-cell"></span></div>
+              </div>
+            </div>
+
+            <!-- The document while it flies into the table -->
+            <div class="l6-fly-doc font-mono" id="l6FlyDoc">📄 Aadhaar · 1234</div>
+          </div>
+
+          <!-- On-screen search question, then the direct path -->
+          <div class="l6-search-prompt" id="l6SearchPrompt">
+            <span class="l6-prompt-q font-mono">❓ Later, the evaluator asks for the same Aadhaar document. What do we do?</span>
+            <span class="l6-prompt-a font-mono"><b>1234</b> <i>→</i> Same Hash Function <i>→</i> <b>Index 4</b> <i>→</i> 📄 Aadhaar Document</span>
+          </div>
+
+          <div class="l3-caption font-mono" id="l6LabCaption">Press “Store the Document” — the document must land in its calculated position.</div>
+        </div>
+
+        <!-- 3. Bottom Action & Definition Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to store (Default View) -->
+          <div class="card-columns" id="l6-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l6StartStoreBtn" onclick="Level6Controller.startStore()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Store the Document</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Store & Search Tracker -->
+          <div class="story-card hidden" id="l6-store-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l6StoreDetail">Storing the Aadhaar document...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l6StorePhase">
+                STORING
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Definition + Key / Hash Function / Hash Table -->
+          <div class="story-card hidden" id="l6-concept-card">
+            <div class="concept-banner l6-concept">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is the <span class="text-gold-glow">HASH TABLE</span></h2>
+                  <p class="concept-subtitle">The structure that holds every position — documents wait at exactly the
+                    spot their key calculated.</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">🗝️ Key</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">⚙️ Hash Function</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">🗂️ Hash Table</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>Next: Collision (Level 07)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- The three concepts, revealed one by one -->
+              <div class="l6-trio">
+                <div class="l6-trio-card">
+                  <div class="l6-trio-head">
+                    <span class="l6-trio-label font-mono">KEY</span>
+                    <span class="l6-trio-ico">🗝️</span>
+                  </div>
+                  <span class="l6-trio-val font-mono">1234</span>
+                  <span class="l6-trio-q">“Who is the document?”</span>
+                </div>
+                <div class="l6-trio-card">
+                  <div class="l6-trio-head">
+                    <span class="l6-trio-label font-mono">HASH FUNCTION</span>
+                    <span class="l6-trio-ico">⚙️</span>
+                  </div>
+                  <span class="l6-trio-val font-mono">1234 → 4</span>
+                  <span class="l6-trio-q">“Where should it go?”</span>
+                </div>
+                <div class="l6-trio-card is-new">
+                  <div class="l6-trio-head">
+                    <span class="l6-trio-label font-mono">HASH TABLE</span>
+                    <span class="l6-trio-ico">🗂️</span>
+                  </div>
+                  <span class="l6-trio-val font-mono">Index 4 → 📄</span>
+                  <span class="l6-trio-q">“Where is it stored?”</span>
+                </div>
+              </div>
+
+              <!-- Short definition, revealed last -->
+              <div class="l6-def-strip">
+                <span class="l6-def-badge font-mono">DEFINITION</span>
+                <div class="l6-def-body">
+                  <span class="l6-def-main">Hash Table = A structure that stores documents using positions calculated
+                    from their keys.</span>
+                  <span class="l6-def-formal font-mono">Formally: a data structure that stores key-value pairs at
+                    locations determined by a hash function.</span>
+                </div>
+              </div>
+
+              <!-- Transition hook into COLLISION -->
+              <div class="scale-compare l6-hook-wrap">
+                <div class="scale-hook">
+                  <span class="hook-q">Now we know where the document is stored… <strong>But what happens when another
+                      document also gets the SAME position?</strong></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 7: COLLISION (5678 → 4, OCCUPIED) — FINALE
+         ======================================================== -->
+    <section class="stage-level" id="level-7" data-level="7" data-total-steps="3" data-title="Collision & How to Fix It">
+      <div class="level-canvas">
+
+        <!-- 1. The Collision Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">💥</div>
+            <div class="officer-info">
+              <span class="officer-title">COLLISION ALERT</span>
+              <span class="officer-status">Two keys, one spot</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">A NEW DOCUMENT ARRIVES:</div>
+            <p class="dialogue-text">
+              Key <span class="highlight-target-pill">5678</span> — run the same calculation… but position 4 is
+              already taken.
+            </p>
+          </div>
+          <div class="l5-equation">
+            <span class="l5-eq-main font-bold">5678 → ?</span>
+            <span class="l5-eq-label font-mono">SAME MATH, NEW KEY</span>
+          </div>
+        </div>
+
+        <!-- 2. The Collision Lab -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">💥 COLLISION LAB</span>
+              <h2 class="desk-heading">New key 5678… will it fit at location 4?</h2>
+            </div>
+            <div class="live-scan-indicator" id="l7ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l7ScanStatus">Slot 4 occupied</span>
+            </div>
+          </div>
+
+          <div class="l3-lab">
+            <!-- The new key -->
+            <div class="l5-keycard" id="l7KeyCard">
+              <span class="l5-key-icon">🪪</span>
+              <span class="l5-key-name">New Aadhaar</span>
+              <span class="l5-key-num font-mono font-bold">5678</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The calculation -->
+            <div class="l3-hash-box" id="l7HashBox">
+              <span class="l3-box-icon">⚙️</span>
+              <span class="l3-box-title font-mono">HASH FUNCTION</span>
+              <span class="l5-box-display font-mono" id="l7CalcDisplay">5678 → ? → ?</span>
+            </div>
+
+            <div class="l3-flow-arrow">➜</div>
+
+            <!-- The file locations (slot 4 pre-occupied by 1234) -->
+            <div class="l3-table">
+              <span class="l3-table-title font-mono">FILE LOCATIONS (0 – 9)</span>
+              <div class="l3-slots">
+                <div class="l3-slot" id="l7Slot-0"><span class="l3-slot-idx">0</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-1"><span class="l3-slot-idx">1</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-2"><span class="l3-slot-idx">2</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-3"><span class="l3-slot-idx">3</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot filled occupied" id="l7Slot-4"><span class="l3-slot-idx">4</span><span class="l3-slot-fill">🪪</span></div>
+                <div class="l3-slot" id="l7Slot-5"><span class="l3-slot-idx">5</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-6"><span class="l3-slot-idx">6</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-7"><span class="l3-slot-idx">7</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-8"><span class="l3-slot-idx">8</span><span class="l3-slot-fill"></span></div>
+                <div class="l3-slot" id="l7Slot-9"><span class="l3-slot-idx">9</span><span class="l3-slot-fill"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l3-caption font-mono" id="l7LabCaption">Position 4 already holds document 1234. Run the
+            calculation for 5678…</div>
+        </div>
+
+        <!-- 3. Bottom Action & Definition Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to calculate (Default View) -->
+          <div class="card-columns" id="l7-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l7StartCalcBtn" onclick="Level7Controller.startCalc()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">Run the Calculation</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Collision Tracker -->
+          <div class="story-card hidden" id="l7-calc-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l7CalcDetail">Performing calculation on key 5678...</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l7CalcPhase">
+                CALCULATING
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Definition -->
+          <div class="story-card hidden" id="l7-concept-card">
+            <div class="concept-banner">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">This is a <span class="text-alert-glow">COLLISION</span></h2>
+                  <p class="concept-subtitle">When two different keys produce the same location, it is called a
+                    collision.</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="l7-pair">
+                    <div class="l7-pair-row">
+                      <span class="l7-pair-key font-mono">1234</span>
+                      <span class="l7-pair-arrow">→</span>
+                      <span class="l7-pair-loc font-mono">Position 4</span>
+                    </div>
+                    <div class="l7-pair-row">
+                      <span class="l7-pair-key font-mono">5678</span>
+                      <span class="l7-pair-arrow">→</span>
+                      <span class="l7-pair-loc font-mono">Position 4</span>
+                      <span class="l7-pair-boom">💥</span>
+                    </div>
+                    <div class="l7-pair-note font-mono">keys differ · spot same</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>🌍 Applications of Hashing (Level 08)</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Two handling methods -->
+              <div class="scale-compare l7-methods">
+                <div class="scale-seg l7-method">
+                  <span class="scale-num">Open Hashing</span>
+                  <span class="scale-label">collision → chain</span>
+                  <span class="scale-verdict">store together ✔</span>
+                </div>
+                <div class="scale-vs">VS</div>
+                <div class="scale-seg l7-method">
+                  <span class="scale-num">Closed Hashing</span>
+                  <span class="scale-label">collision → next slot</span>
+                  <span class="scale-verdict">find another spot ✔</span>
+                </div>
+                <div class="scale-hook">
+                  <span class="hook-q">…and THAT is how hash tables survive. <strong>You just learned hashing!
+                      🎓</strong></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+    <!-- ========================================================
+         LEVEL 8: APPLICATIONS OF HASHING (PASSWORD · DATABASE · FILES)
+         ======================================================== -->
+    <section class="stage-level" id="level-8" data-level="8" data-total-steps="5"
+      data-title="Applications of Hashing">
+      <div class="level-canvas">
+
+        <!-- 1. Transition Banner -->
+        <div class="counselling-scene-banner">
+          <div class="officer-badge">
+            <div class="officer-avatar">🌍</div>
+            <div class="officer-info">
+              <span class="officer-title">APPLICATIONS OF HASHING</span>
+              <span class="officer-status">Where we use it every day</span>
+            </div>
+          </div>
+          <div class="dialogue-speech-bubble">
+            <div class="dialogue-tag">NOW WE KNOW HASHING FINDS DATA FAST…</div>
+            <p class="dialogue-text">
+              But where do we <span class="highlight-target-pill">actually use hashing in real life?</span>
+            </p>
+          </div>
+          <div class="l4-equation">
+            <span class="l4-eq-main font-bold">3 REAL USES</span>
+            <span class="l4-eq-label font-mono">SAME CORE IDEA</span>
+          </div>
+        </div>
+
+        <!-- 2. The Application Stage -->
+        <div class="document-showcase-desk">
+          <div class="desk-header">
+            <div class="desk-title-group">
+              <span class="folder-tag">🌍 HASHING AT WORK</span>
+              <h2 class="desk-heading" id="l8DeskHeading">Three everyday places where hashing quietly works…</h2>
+            </div>
+            <div class="live-scan-indicator" id="l8ScanIndicator">
+              <span class="scan-dot"></span>
+              <span class="scan-status-text" id="l8ScanStatus">3 applications</span>
+            </div>
+          </div>
+
+          <div class="l8-stage" id="l8Stage">
+            <!-- Flying token used by every scene -->
+            <div class="l8-fly-token font-mono" id="l8FlyToken"></div>
+
+            <!-- SCENE 1: the three applications, revealed one by one -->
+            <div class="l8-panel l8-apps" id="l8PanelApps">
+              <div class="l8-app-tile t-pw" id="l8Tile1">
+                <span class="l8-app-ico">🔐</span>
+                <span class="l8-app-name">Password Storage</span>
+                <span class="l8-app-sub font-mono">password saved as a hash</span>
+              </div>
+              <div class="l8-app-tile t-db" id="l8Tile2">
+                <span class="l8-app-ico">🗄️</span>
+                <span class="l8-app-name">Database Search</span>
+                <span class="l8-app-sub font-mono">reach a record directly</span>
+              </div>
+              <div class="l8-app-tile t-du" id="l8Tile3">
+                <span class="l8-app-ico">📁</span>
+                <span class="l8-app-name">File Deduplication</span>
+                <span class="l8-app-sub font-mono">same content, stored once</span>
+              </div>
+            </div>
+
+            <!-- SCENE 2: PASSWORD STORAGE -->
+            <div class="l8-panel hidden" id="l8PanelPw">
+              <div class="l8-flow-row">
+                <div class="l8-card" id="l8PwCard">
+                  <span class="l8-card-ico">🔑</span>
+                  <span class="l8-card-label font-mono">PASSWORD</span>
+                  <span class="l8-card-value font-mono">MyPassword123</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l3-hash-box" id="l8PwHashBox">
+                  <span class="l3-box-icon">⚙️</span>
+                  <span class="l3-box-title font-mono">HASH FUNCTION</span>
+                  <span class="l5-box-display font-mono" id="l8PwCalc">MyPassword123 → ?</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-card l8-hashval" id="l8PwHashVal">
+                  <span class="l8-card-label font-mono">HASHED VALUE</span>
+                  <span class="l8-card-value font-mono">8f3a…</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-card l8-stored" id="l8PwStored">
+                  <span class="l8-card-ico">💾</span>
+                  <span class="l8-card-label font-mono">STORED HASH</span>
+                </div>
+              </div>
+
+              <div class="l8-flow-row">
+                <div class="l8-card l8-mini" id="l8PwEntered">
+                  <span class="l8-card-label font-mono">ENTERED PASSWORD</span>
+                  <span class="l8-card-value font-mono">••••••••</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l3-hash-box l8-mini-box" id="l8PwHashBox2">
+                  <span class="l3-box-icon">⚙️</span>
+                  <span class="l3-box-title font-mono">HASH FUNCTION</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-card l8-mini" id="l8PwCompare">
+                  <span class="l8-card-label font-mono">COMPARE WITH STORED HASH</span>
+                  <span class="l8-card-value font-mono">8f3a… = 8f3a…</span>
+                </div>
+                <div class="l8-verdict" id="l8PwVerdict">✔ MATCH — ACCESS</div>
+              </div>
+
+              <div class="l8-idea" id="l8PwIdea">🔐 Hashing → helps protect stored passwords</div>
+            </div>
+
+            <!-- SCENE 3: DATABASE SEARCHING -->
+            <div class="l8-panel hidden" id="l8PanelDb">
+              <div class="l8-flow-row">
+                <div class="l8-card" id="l8DbSearch">
+                  <span class="l8-card-ico">🔎</span>
+                  <span class="l8-card-label font-mono">SEARCH</span>
+                  <span class="l8-card-value font-mono">Student ID = 103</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l3-hash-box" id="l8DbHashBox">
+                  <span class="l3-box-icon">⚙️</span>
+                  <span class="l3-box-title font-mono">HASH FUNCTION</span>
+                  <span class="l5-box-display font-mono" id="l8DbCalc">103 → ?</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-db" id="l8DbTable">
+                  <span class="l8-db-title font-mono">STUDENT RECORDS</span>
+                  <div class="l8-db-rows">
+                    <div class="l8-db-row" id="l8DbRow-101"><span class="l8-db-id font-mono">101</span><span
+                        class="l8-db-name">Student 101</span></div>
+                    <div class="l8-db-row" id="l8DbRow-102"><span class="l8-db-id font-mono">102</span><span
+                        class="l8-db-name">Student 102</span></div>
+                    <div class="l8-db-row" id="l8DbRow-103"><span class="l8-db-id font-mono">103</span><span
+                        class="l8-db-name">Student 103</span></div>
+                    <div class="l8-db-row" id="l8DbRow-104"><span class="l8-db-id font-mono">104</span><span
+                        class="l8-db-name">Student 104</span></div>
+                    <div class="l8-db-row" id="l8DbRow-105"><span class="l8-db-id font-mono">105</span><span
+                        class="l8-db-name">Student 105</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="visual-chain-flow l8-db-chain" id="l8DbChain">
+                <div class="chain-node found">🗝️ Key</div><span class="chain-arrow">→</span>
+                <div class="chain-node found">⚙️ Hash Function</div><span class="chain-arrow">→</span>
+                <div class="chain-node found">📍 Location</div><span class="chain-arrow">→</span>
+                <div class="chain-node found">📄 Data</div>
+              </div>
+
+              <div class="l8-idea" id="l8DbIdea">🗄️ Hashing → fast searching, no scanning!</div>
+            </div>
+
+            <!-- SCENE 4: FILE / DATA DEDUPLICATION -->
+            <div class="l8-panel hidden" id="l8PanelDedup">
+              <div class="l8-flow-row">
+                <div class="l8-card" id="l8FileA">
+                  <span class="l8-card-ico">📄</span>
+                  <span class="l8-card-label font-mono">FILE A</span>
+                  <span class="l8-card-value font-mono">notes.pdf</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l3-hash-box l8-mini-box" id="l8HashA">
+                  <span class="l3-box-icon">⚙️</span>
+                  <span class="l3-box-title font-mono">HASH</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-card l8-hashval l8-mini" id="l8ChipA">
+                  <span class="l8-card-label font-mono">HASH VALUE</span>
+                  <span class="l8-card-value font-mono">ABC123</span>
+                </div>
+              </div>
+
+              <div class="l8-flow-row">
+                <div class="l8-card" id="l8FileB">
+                  <span class="l8-card-ico">📄</span>
+                  <span class="l8-card-label font-mono">FILE B</span>
+                  <span class="l8-card-value font-mono">copy.pdf</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l3-hash-box l8-mini-box" id="l8HashB">
+                  <span class="l3-box-icon">⚙️</span>
+                  <span class="l3-box-title font-mono">HASH</span>
+                </div>
+                <div class="l3-flow-arrow">➜</div>
+                <div class="l8-card l8-hashval l8-mini" id="l8ChipB">
+                  <span class="l8-card-label font-mono">HASH VALUE</span>
+                  <span class="l8-card-value font-mono">ABC123</span>
+                </div>
+              </div>
+
+              <div class="l8-match" id="l8Match">
+                <span class="l8-match-head font-mono">SAME HASH · ABC123 = ABC123</span>
+                <span class="l8-match-sub">Possible same content → store only one copy ✔</span>
+              </div>
+
+              <div class="l8-idea" id="l8DedupIdea">📁 Hashing → helps identify duplicate data</div>
+            </div>
+
+            <!-- SCENE 5: THE FINAL PICTURE -->
+            <div class="l8-panel hidden" id="l8PanelFinal">
+              <div class="l8-tree">
+                <div class="l8-tree-root" id="l8TreeRoot">🗂️ HASHING</div>
+                <div class="l8-tree-links" id="l8TreeLinks">
+                  <span class="l8-link"></span><span class="l8-link"></span><span class="l8-link"></span>
+                </div>
+                <div class="l8-tree-leaves">
+                  <div class="l8-leaf" id="l8Leaf1">
+                    <span class="l8-leaf-ico">🔐</span>
+                    <b>Password Storage</b>
+                    <i>Security</i>
+                  </div>
+                  <div class="l8-leaf" id="l8Leaf2">
+                    <span class="l8-leaf-ico">🗄️</span>
+                    <b>Database Search</b>
+                    <i>Speed</i>
+                  </div>
+                  <div class="l8-leaf" id="l8Leaf3">
+                    <span class="l8-leaf-ico">📁</span>
+                    <b>Deduplication</b>
+                    <i>Identify Duplicates</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l3-caption font-mono" id="l8LabCaption">Three applications of hashing — revealed one by
+            one.</div>
+        </div>
+
+        <!-- 3. Bottom Action & Statement Zone -->
+        <div class="story-discovery-zone">
+
+          <!-- STAGE A: Ready to start (Default View) -->
+          <div class="card-columns" id="l8-question-card">
+            <div class="col-action">
+              <button class="primary-launch-btn" id="l8StartBtn" onclick="Level8Controller.startPassword()">
+                <span class="btn-symbol">▶</span>
+                <span class="btn-label">See Hashing in Action</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE B: Live Application Tracker -->
+          <div class="story-card hidden" id="l8-live-card">
+            <div class="live-search-banner">
+              <div class="search-progress-item">
+                <span class="pulse-indicator"></span>
+                <span class="search-progress-text" id="l8LiveDetail">Working…</span>
+              </div>
+              <div class="search-progress-steps font-mono" id="l8LivePhase">
+                RUNNING
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE C: The Final Statement -->
+          <div class="story-card hidden" id="l8-final-card">
+            <div class="concept-banner l8-final">
+              <div class="concept-header-row">
+                <div class="concept-headline-group">
+                  <h2 class="concept-main-title">One idea, <span class="text-gold-glow">many uses</span></h2>
+                  <p class="concept-subtitle">“The application may change, but the basic idea remains the same: use a
+                    key to quickly work with data.”</p>
+                </div>
+
+                <div class="concept-right-col">
+                  <div class="visual-chain-flow">
+                    <div class="chain-node found">🗝️ Key</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node found">⚡ Quick Work</div>
+                  </div>
+
+                  <div class="concept-next-row">
+                    <button class="primary-launch-btn success-variant" onclick="PresentationApp.nextStage()">
+                      <span>🎓 Finish Presentation</span>
+                      <span class="btn-symbol">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /story-discovery-zone -->
+
+      </div> <!-- /level-canvas -->
+    </section>
+
+  </main> <!-- /stage-container -->
+
+  <!-- Bottom Navigation Dock -->
+  <footer class="presentation-footer" id="presentationFooter">
+    <div class="dock-left">
+      <div class="quick-level-switcher">
+        <button class="switcher-dot active" data-jump="1" title="Level 1: Real-Life Example">1</button>
+        <button class="switcher-dot" data-jump="2" title="Level 2: The Problem">2</button>
+        <button class="switcher-dot" data-jump="3" title="Level 3: Hashing Definition">3</button>
+        <button class="switcher-dot" data-jump="4" title="Level 4: What is a Key?">4</button>
+        <button class="switcher-dot" data-jump="5" title="Level 5: Hash Function">5</button>
+        <button class="switcher-dot" data-jump="6" title="Level 6: The Hash Table">6</button>
+        <button class="switcher-dot" data-jump="7" title="Level 7: Collision">7</button>
+        <button class="switcher-dot" data-jump="8" title="Level 8: Applications of Hashing">8</button>
+      </div>
+    </div>
+
+    <div class="dock-center">
+      <div class="primary-nav-cluster">
+        <button class="nav-control-btn" id="prevBtn" onclick="PresentationApp.prev()"
+          title="Previous Step / Back (← or Backspace)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          <span>PREV</span>
+        </button>
+
+        <button class="nav-control-btn nav-btn-next" id="nextBtn" onclick="PresentationApp.next()"
+          title="Next Step / Forward (→ or Space)">
+          <span>NEXT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        <button class="nav-control-btn nav-btn-reset" id="resetBtn" onclick="PresentationApp.replayCurrentLevel()"
+          title="Replay Animation (R)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5" />
+          </svg>
+          <span>REPLAY</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="dock-right">
+      <div class="keyboard-legend-preview">
+        <span class="legend-pill"><kbd>SPACE</kbd> Next</span>
+        <span class="legend-pill"><kbd>←</kbd> Back</span>
+        <span class="legend-pill"><kbd>N</kbd> Notes</span>
+        <span class="legend-pill"><kbd>F</kbd> Full Screen</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer (Floating, collapsible) -->
+  <aside class="presenter-notes-drawer" id="presenterNotesDrawer">
+    <div class="notes-header">
+      <div class="notes-title-group">
+        <span class="notes-badge">TEACHER SPEECH CUES</span>
+        <span class="notes-level-tag" id="notesLevelTag">LEVEL 01</span>
+      </div>
+      <button class="close-notes-btn" id="closeNotesBtn" aria-label="Close notes">✕</button>
+    </div>
+    <div class="notes-body" id="notesContent">
+      <div class="note-chunk active" data-note-level="1" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Hello guys! Before we dive into hashing, let me ask you one simple question.”</p>
+        <p>“You’ve all faced this: after qualifying for EAMCET, you go for counselling.”</p>
+        <p>“How do you take your certificates? Aadhaar, college certificates, mark memos, TC... all kept together in one
+          big file.”</p>
+        <p>“On counselling day, the evaluator asks: <em>‘Can you give me your 10th class mark memo?’</em> How will you
+          find it?”</p>
+      </div>
+      <div class="note-chunk" data-note-level="1" data-note-step="2">
+        <p class="cue-lead"><strong>While search animation runs:</strong></p>
+        <p>“We open the file and check one by one: Document 1 → Not this. Document 2 → Not this. Document 3 → Not this.
+          Document 4 → Found it!”</p>
+      </div>
+      <div class="note-chunk" data-note-level="1" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the CS Concept:</strong></p>
+        <p>“This is exactly what we call <strong>Linear Search</strong> in computer science. Checking one item after
+          another sequentially.”</p>
+        <p>“For 20 documents, it’s fast. But what if we have <strong>1,00,000 documents</strong>? We can’t check one by
+          one! That’s why we need Hashing!”</p>
+      </div>
+
+      <!-- LEVEL 02 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="2" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Now imagine instead of 20 documents, we have <strong>1 lakh documents</strong> in that one file.”</p>
+        <p>“Every time we need a particular document, checking them one by one... it will take a lot of time.”</p>
+        <p>“Each little tile on the screen is 250 documents. 400 tiles = 1,00,000 documents!”</p>
+      </div>
+      <div class="note-chunk" data-note-level="2" data-note-step="2">
+        <p class="cue-lead"><strong>While the 1-lakh scan runs:</strong></p>
+        <p>“Watch the counter race... checking 1 document per second means <strong>1,00,000 seconds</strong>.”</p>
+        <p>“That is <strong>27 hours and 46 minutes</strong> of non-stop checking — just to find ONE document!”</p>
+        <p>“Can we really keep doing this every single time? Obviously not.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="2" data-note-step="3">
+        <p class="cue-lead"><strong>Set up the idea of Hashing:</strong></p>
+        <p>“So can we find the document <strong>without</strong> checking every document one by one?”</p>
+        <p>“Wishful thinking: Identify the document → Determine its location → Go directly → Find it.”</p>
+        <p>“That would be much faster, right? This is the basic problem that <strong>Hashing tries to solve</strong>.”</p>
+      </div>
+
+      <!-- LEVEL 03 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="3" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“So, what exactly is hashing? Let's define it.”</p>
+        <p>“<strong>Hashing is a technique of mapping keys to specific locations in a hash table using a hash
+            function</strong> — allowing fast insertion, deletion and searching.”</p>
+        <p>“Three words to remember: <strong>Key</strong>, <strong>Hash Function</strong>, <strong>Location</strong>.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="3" data-note-step="2">
+        <p class="cue-lead"><strong>While the hash machine runs:</strong></p>
+        <p>“Watch the machine — NO scanning happening here!”</p>
+        <p>“Each key drops in, the hash function does its secret calculation, and the document lands <strong>directly
+            in its slot</strong>.”</p>
+        <p>“How does it decide the slot? That calculation is the magic — we'll open the black box in Level 5.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="3" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the Definition:</strong></p>
+        <p>“Key → Hash Function → Location. That single pipeline IS hashing.”</p>
+        <p>“Because every key knows its home slot, search, insert and delete become <strong>super fast</strong>.”</p>
+        <p>“But wait — we used the word 'key' three times. What exactly is a key? Let's take it step by step → Level
+          4.”</p>
+      </div>
+
+      <!-- LEVEL 04 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="4" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Suppose there are many Aadhaar cards in the same place — all look the same.”</p>
+        <p>“How can we identify <strong>MY</strong> Aadhaar from all the other Aadhaar cards?”</p>
+        <p>“Looks? Photo? Name? Everything is similar. Confusing, right?”</p>
+      </div>
+      <div class="note-chunk" data-note-level="4" data-note-step="2">
+        <p class="cue-lead"><strong>While the numbers reveal:</strong></p>
+        <p>“We use the <strong>Aadhaar number</strong>! Every card has its own unique number.”</p>
+        <p>“Same way: Mark memo → <strong>Hall Ticket Number</strong>. Bank document → <strong>Account Number</strong>.”</p>
+        <p>“The value that helps us identify a particular record is called a <strong>KEY</strong>.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="4" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the Definition:</strong></p>
+        <p>“<strong>Key = a value used to identify a particular record.</strong> Simple as that.”</p>
+        <p>“Now we have the key. But one question is still open: <em>‘How can we use this key to find the LOCATION of
+            the document?’</em>”</p>
+        <p>“That's where the <strong>hash function</strong> comes in — next level!”</p>
+      </div>
+
+      <!-- LEVEL 05 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="5" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Suppose my Aadhaar number is <strong>1234</strong>. This is my key.”</p>
+        <p>“Imagine the file can hold 10 documents: locations <strong>0, 1, 2 … 9</strong>.”</p>
+        <p>“Where do we keep the document so we can find it again instantly? Let's calculate.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="5" data-note-step="2">
+        <p class="cue-lead"><strong>While the calculation runs:</strong></p>
+        <p>“We perform some calculation on the key: <strong>1234 → Calculation → 4</strong>.”</p>
+        <p>“So we say: ‘Keep this document at <strong>location 4</strong>.’”</p>
+        <p>“Next time we want the same document, we do the <strong>same calculation again</strong> → position 4 again
+          → go directly there. No scanning!”</p>
+      </div>
+      <div class="note-chunk" data-note-level="5" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the Definition:</strong></p>
+        <p>“The calculation that converts a <strong>key</strong> into a <strong>location</strong> is called a <strong>hash
+            function</strong>.”</p>
+        <p>“Key → Hash Function → Location. This is the basic idea behind hashing.”</p>
+        <p>“But hold on — we have the location. Where do we <strong>actually keep the document?</strong> That's the
+          <strong>HASH TABLE</strong> → next level!”</p>
+      </div>
+
+      <!-- LEVEL 06 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="6" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Okay — we calculated position 4 for key <strong>1234</strong>. But where are we actually keeping the
+          document?”</p>
+        <p>“We need some structure that contains these positions, where our documents can be stored.”</p>
+        <p>“That structure is called a <strong>HASH TABLE</strong>.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="6" data-note-step="2">
+        <p class="cue-lead"><strong>While the document is stored &amp; retrieved:</strong></p>
+        <p>“Watch — the Aadhaar document itself slides into <strong>Index 4</strong> of the hash table. Position 4 is
+          where it is <strong>stored</strong>.”</p>
+        <p>“Later the evaluator asks for the same document. Do we scan? No! We only need the key <strong>1234</strong>.”</p>
+        <p>“Same key → same hash function → <strong>Index 4</strong> → document. One direct jump, zero checking.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="6" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the Definition &amp; the three roles:</strong></p>
+        <p>“<strong>Hash Table = a structure that stores documents using positions calculated from their keys.</strong>”</p>
+        <p>“Remember the three jobs: <strong>KEY</strong> identifies the document, <strong>HASH FUNCTION</strong>
+          calculates the location, <strong>HASH TABLE</strong> stores the document there.”</p>
+        <p>“Everything looks perfect… until another document also gets the <strong>SAME position</strong>. That's our
+          next level: <strong>COLLISION</strong>.”</p>
+      </div>
+
+      <!-- LEVEL 07 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="7" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“Now the real problem enters the game. Another document arrives — key <strong>5678</strong>.”</p>
+        <p>“Remember: position 4 already holds our document from key <strong>1234</strong>.”</p>
+        <p>“Let's perform the same calculation and see where 5678 wants to go.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="7" data-note-step="2">
+        <p class="cue-lead"><strong>While the calculation runs:</strong></p>
+        <p>“5678 → Calculation → <strong>4</strong>. Again, we get position 4!”</p>
+        <p>“But position 4 is already occupied by another document.”</p>
+        <p>“The keys are different, but both are trying to occupy the same position. This is called a <strong>collision</strong>.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="7" data-note-step="3">
+        <p class="cue-lead"><strong>Anchor the Definition & close:</strong></p>
+        <p>“<strong>When two different keys produce the same location, it is called a collision.</strong>”</p>
+        <p>“1234 → Position 4, 5678 → Position 4. Keys differ, spot same.”</p>
+        <p>“There are two ways to handle it: <strong>Open Hashing</strong> and <strong>Closed Hashing</strong> — chain
+          the collision, or find another slot. Those are your next topics.”</p>
+        <p>“That's hashing — from searching every document, to calculating the location. Well done!”</p>
+        <p>“One last question before we finish: <strong>where do we actually use hashing in real life?</strong> Let's
+          see → Level 08.”</p>
+      </div>
+
+      <!-- LEVEL 08 SPEECH CUES -->
+      <div class="note-chunk" data-note-level="8" data-note-step="1">
+        <p class="cue-lead"><strong>What to say to the class:</strong></p>
+        <p>“We know hashing finds data quickly. But where do we <strong>actually use it</strong>?”</p>
+        <p>“Look at the three cards: <strong>Passwords</strong>, <strong>Databases</strong>, <strong>Files</strong>.”
+        </p>
+        <p>“Three different jobs — let's take them one by one.”</p>
+      </div>
+      <div class="note-chunk" data-note-level="8" data-note-step="2">
+        <p class="cue-lead"><strong>While the password animation runs:</strong></p>
+        <p>“We never keep the real password. <strong>MyPassword123 → hash function → 8f3a…</strong> — only the hash is
+          stored.”</p>
+        <p>“At login: entered password → same hash function → <strong>compare</strong> with the stored hash. Match?
+          Access.”</p>
+        <p>“<strong>Hashing helps protect stored passwords.</strong>”</p>
+      </div>
+      <div class="note-chunk" data-note-level="8" data-note-step="3">
+        <p class="cue-lead"><strong>While the student record search runs:</strong></p>
+        <p>“A database holds many student records. Searching for <strong>ID 103</strong> — we don't check 101, 102, 103
+          one by one.”</p>
+        <p>“Key → hash function → location → data. The system <strong>jumps straight to the record</strong>.”</p>
+        <p>“<strong>Hashing gives us fast searching.</strong>”</p>
+      </div>
+      <div class="note-chunk" data-note-level="8" data-note-step="4">
+        <p class="cue-lead"><strong>While the two files are hashed:</strong></p>
+        <p>“File A and File B — different names, but look: <strong>same hash ABC123</strong>.”</p>
+        <p>“Same hash means <strong>possible same content</strong> — so the system stores only one copy.”</p>
+        <p>“<strong>Hashing helps identify duplicate data.</strong>”</p>
+      </div>
+      <div class="note-chunk" data-note-level="8" data-note-step="5">
+        <p class="cue-lead"><strong>Close the presentation:</strong></p>
+        <p>“Passwords, databases, files — three uses, one idea.”</p>
+        <p>“<strong>The application may change, but the basic idea remains the same: use a key to quickly work with
+            data.</strong>”</p>
+        <p>“That completes hashing — from one big file of documents, to real applications. Well done, everyone! 🎓”</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Help & Shortcuts Modal -->
+  <div class="shortcuts-modal-backdrop" id="shortcutsModal" onclick="PresentationApp.toggleHelpModal(false)">
+    <div class="shortcuts-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Classroom Presenter Shortcuts</h3>
+        <button class="close-modal-btn" onclick="PresentationApp.toggleHelpModal(false)">✕</button>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>Space</kbd> / <kbd>→</kbd></div>
+          <div class="shortcut-desc">Next step or next level</div>
+        </div>
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>←</kbd> / <kbd>Backspace</kbd></div>
+          <div class="shortcut-desc">Previous step or previous level</div>
+        </div>
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>F</kbd></div>
+          <div class="shortcut-desc">Toggle full-screen presentation mode</div>
+        </div>
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>N</kbd></div>
+          <div class="shortcut-desc">Toggle teacher speech notes drawer</div>
+        </div>
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>R</kbd></div>
+          <div class="shortcut-desc">Replay current animation sequence</div>
+        </div>
+        <div class="shortcut-item">
+          <div class="keys-combo"><kbd>Esc</kbd></div>
+          <div class="shortcut-desc">Exit fullscreen or close drawer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transient Presenter Toast (replaces blocking alerts) -->
+  <div class="toast-notice" id="toastNotice" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
