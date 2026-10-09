@@ -199,8 +199,6 @@ const Level1Controller = {
     const liveText = document.getElementById('liveScanText');
     if (liveIndicator) liveIndicator.classList.remove('active');
     if (liveText) liveText.innerText = 'Search Completed';
-
-    PresentationApp.scheduleAuto(4500);
   },
 
   handleNext() {
@@ -385,8 +383,6 @@ const Level2Controller = {
     const status = document.getElementById('l2ScanStatus');
     if (indicator) indicator.classList.remove('active');
     if (status) status.innerText = 'Better way needed';
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -563,8 +559,6 @@ const Level3Controller = {
 
     const box = document.getElementById('l3HashBox');
     if (box) box.classList.remove('active', 'zap');
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -725,8 +719,6 @@ const Level4Controller = {
     const status = document.getElementById('l4ScanStatus');
     if (indicator) indicator.classList.remove('active');
     if (status) status.innerText = 'Key identified';
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -938,8 +930,6 @@ const Level5Controller = {
       keycard.classList.remove('active');
       keycard.classList.add('done');
     }
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1253,8 +1243,6 @@ const Level6Controller = {
       void banner.offsetWidth;
       banner.classList.add('play');
     }
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1437,8 +1425,6 @@ const Level7Controller = {
       keycard.classList.remove('active');
       keycard.classList.add('blocked');
     }
-
-    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1902,7 +1888,6 @@ const Level8Controller = {
       const banner = document.querySelector('#l8-final-card .l8-final');
       if (banner) banner.classList.add('play');
       this.isRunning = false;
-      PresentationApp.scheduleAuto(4500);
     }, 2700);
   },
 
@@ -1973,7 +1958,7 @@ const PresentationApp = {
     if (!this.autoPlay) return;
     this._autoTimer = setTimeout(() => {
       this._autoTimer = null;
-      this.next();
+      this.nextStep();
     }, delay);
   },
 
@@ -2074,6 +2059,10 @@ const PresentationApp = {
 
   next() {
     this.clearAuto();
+    this.nextStage();
+  },
+
+  nextStep() {
     if (this.currentLevel === 1) {
       Level1Controller.handleNext();
     } else if (this.currentLevel === 2) {
@@ -2090,32 +2079,12 @@ const PresentationApp = {
       Level7Controller.handleNext();
     } else if (this.currentLevel === 8) {
       Level8Controller.handleNext();
-    } else {
-      this.nextStage();
     }
   },
 
   prev() {
     this.clearAuto();
-    if (this.currentLevel === 1) {
-      Level1Controller.handlePrev();
-    } else if (this.currentLevel === 2) {
-      Level2Controller.handlePrev();
-    } else if (this.currentLevel === 3) {
-      Level3Controller.handlePrev();
-    } else if (this.currentLevel === 4) {
-      Level4Controller.handlePrev();
-    } else if (this.currentLevel === 5) {
-      Level5Controller.handlePrev();
-    } else if (this.currentLevel === 6) {
-      Level6Controller.handlePrev();
-    } else if (this.currentLevel === 7) {
-      Level7Controller.handlePrev();
-    } else if (this.currentLevel === 8) {
-      Level8Controller.handlePrev();
-    } else {
-      this.prevStage();
-    }
+    this.prevStage();
   },
 
   nextStage() {
@@ -2142,6 +2111,9 @@ const PresentationApp = {
     }
 
     this.clearAuto();
+
+    this.resetLevel(this.currentLevel);
+
     this.currentLevel = levelNum;
 
     document.querySelectorAll('.stage-level').forEach(sec => {
@@ -2158,26 +2130,29 @@ const PresentationApp = {
     this.resetActiveLevel();
   },
 
-  resetActiveLevel() {
-    if (this.currentLevel === 1) {
+  resetLevel(levelNum) {
+    if (levelNum === 1) {
       Level1Controller.reset();
-    } else if (this.currentLevel === 2) {
+    } else if (levelNum === 2) {
       Level2Controller.reset();
-    } else if (this.currentLevel === 3) {
+    } else if (levelNum === 3) {
       Level3Controller.reset();
-    } else if (this.currentLevel === 4) {
+    } else if (levelNum === 4) {
       Level4Controller.reset();
-    } else if (this.currentLevel === 5) {
+    } else if (levelNum === 5) {
       Level5Controller.reset();
-    } else if (this.currentLevel === 6) {
+    } else if (levelNum === 6) {
       Level6Controller.reset();
-    } else if (this.currentLevel === 7) {
+    } else if (levelNum === 7) {
       Level7Controller.reset();
-    } else if (this.currentLevel === 8) {
+    } else if (levelNum === 8) {
       Level8Controller.reset();
     }
+  },
 
-    // Kick off the level's first animation automatically.
+  resetActiveLevel() {
+    this.resetLevel(this.currentLevel);
+
     const startDelay = this.currentLevel === 8 ? 2400 : 1000;
     this.scheduleAuto(startDelay);
   },
