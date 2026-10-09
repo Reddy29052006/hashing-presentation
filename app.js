@@ -79,6 +79,7 @@ const Level1Controller = {
 
   startSearchAnimation() {
     if (this.isSearching) return;
+    PresentationApp.clearAuto();
     this.isSearching = true;
 
     // Advance step
@@ -198,6 +199,8 @@ const Level1Controller = {
     const liveText = document.getElementById('liveScanText');
     if (liveIndicator) liveIndicator.classList.remove('active');
     if (liveText) liveText.innerText = 'Search Completed';
+
+    PresentationApp.scheduleAuto(4500);
   },
 
   handleNext() {
@@ -301,6 +304,7 @@ const Level2Controller = {
 
   startScan() {
     if (this.isScanning) return;
+    PresentationApp.clearAuto();
     this.isScanning = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -381,6 +385,8 @@ const Level2Controller = {
     const status = document.getElementById('l2ScanStatus');
     if (indicator) indicator.classList.remove('active');
     if (status) status.innerText = 'Better way needed';
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -473,6 +479,7 @@ const Level3Controller = {
 
   startMapping() {
     if (this.isMapping) return;
+    PresentationApp.clearAuto();
     this.isMapping = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -556,6 +563,8 @@ const Level3Controller = {
 
     const box = document.getElementById('l3HashBox');
     if (box) box.classList.remove('active', 'zap');
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -644,6 +653,7 @@ const Level4Controller = {
 
   startReveal() {
     if (this.isRevealing) return;
+    PresentationApp.clearAuto();
     this.isRevealing = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -715,6 +725,8 @@ const Level4Controller = {
     const status = document.getElementById('l4ScanStatus');
     if (indicator) indicator.classList.remove('active');
     if (status) status.innerText = 'Key identified';
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -804,6 +816,7 @@ const Level5Controller = {
 
   startCalc() {
     if (this.isCalculating) return;
+    PresentationApp.clearAuto();
     this.isCalculating = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -925,6 +938,8 @@ const Level5Controller = {
       keycard.classList.remove('active');
       keycard.classList.add('done');
     }
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1072,6 +1087,7 @@ const Level6Controller = {
 
   startStore() {
     if (this.isRunning) return;
+    PresentationApp.clearAuto();
     this.isRunning = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -1237,6 +1253,8 @@ const Level6Controller = {
       void banner.offsetWidth;
       banner.classList.add('play');
     }
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1327,6 +1345,7 @@ const Level7Controller = {
 
   startCalc() {
     if (this.isCalculating) return;
+    PresentationApp.clearAuto();
     this.isCalculating = true;
     this.currentStep = 2;
     PresentationApp.updateStepTracker(2, 3);
@@ -1418,6 +1437,8 @@ const Level7Controller = {
       keycard.classList.remove('active');
       keycard.classList.add('blocked');
     }
+
+    PresentationApp.scheduleAuto(5000);
   },
 
   handleNext() {
@@ -1513,6 +1534,7 @@ const Level8Controller = {
     if (questionCard) questionCard.classList.toggle('hidden', state !== 'question');
     if (liveCard) liveCard.classList.toggle('hidden', state !== 'live');
     if (finalCard) finalCard.classList.toggle('hidden', state !== 'final');
+    PresentationApp.markLiveDone(false);
   },
 
   // Flying token: value / file travels from one element to another
@@ -1609,6 +1631,7 @@ const Level8Controller = {
   // -------------------------------------------------------------------------
   startPassword() {
     this.clearTimers();
+    PresentationApp.clearAuto();
     this.isRunning = true;
     this.currentStep = 2;
     this.hideToken();
@@ -1690,6 +1713,8 @@ const Level8Controller = {
     this.later(() => {
       this.add('l8PwIdea', 'in');
       this.isRunning = false;
+      PresentationApp.markLiveDone(true);
+      PresentationApp.scheduleAuto(2600);
     }, 6700);
   },
 
@@ -1698,6 +1723,7 @@ const Level8Controller = {
   // -------------------------------------------------------------------------
   startDatabase() {
     this.clearTimers();
+    PresentationApp.clearAuto();
     this.isRunning = true;
     this.currentStep = 3;
     this.hideToken();
@@ -1766,6 +1792,8 @@ const Level8Controller = {
     this.later(() => {
       this.add('l8DbIdea', 'in');
       this.isRunning = false;
+      PresentationApp.markLiveDone(true);
+      PresentationApp.scheduleAuto(2600);
     }, 6100);
   },
 
@@ -1774,6 +1802,7 @@ const Level8Controller = {
   // -------------------------------------------------------------------------
   startDedup() {
     this.clearTimers();
+    PresentationApp.clearAuto();
     this.isRunning = true;
     this.currentStep = 4;
     this.hideToken();
@@ -1839,6 +1868,8 @@ const Level8Controller = {
       this.add('l8DedupIdea', 'in');
       this.setCaption('🗜️ Two files, one stored copy — no wasted space.');
       this.isRunning = false;
+      PresentationApp.markLiveDone(true);
+      PresentationApp.scheduleAuto(2600);
     }, 5200);
   },
 
@@ -1847,6 +1878,7 @@ const Level8Controller = {
   // -------------------------------------------------------------------------
   showFinal() {
     this.clearTimers();
+    PresentationApp.clearAuto();
     this.isRunning = true;
     this.currentStep = 5;
     this.hideToken();
@@ -1870,6 +1902,7 @@ const Level8Controller = {
       const banner = document.querySelector('#l8-final-card .l8-final');
       if (banner) banner.classList.add('play');
       this.isRunning = false;
+      PresentationApp.scheduleAuto(4500);
     }, 2700);
   },
 
@@ -1906,6 +1939,8 @@ const PresentationApp = {
   maxUnlockedLevel: 8,
   isFullscreen: false,
   isNotesOpen: false,
+  autoPlay: true,
+  _autoTimer: null,
 
   levelTitles: [
     'A Real-Life Example',
@@ -1929,6 +1964,35 @@ const PresentationApp = {
     Level6Controller.init();
     Level7Controller.init();
     Level8Controller.init();
+    this.scheduleAuto(1400);
+  },
+
+  // Auto-play support: schedule the next step so the presentation flows on its own.
+  scheduleAuto(delay = 1200) {
+    this.clearAuto();
+    if (!this.autoPlay) return;
+    this._autoTimer = setTimeout(() => {
+      this._autoTimer = null;
+      this.next();
+    }, delay);
+  },
+
+  clearAuto() {
+    if (this._autoTimer) {
+      clearTimeout(this._autoTimer);
+      this._autoTimer = null;
+    }
+  },
+
+  // Stop the spinning "loading" indicator on the live tracker of the active level.
+  markLiveDone(done) {
+    const scopes = ['l8-live-card'];
+    scopes.forEach(id => {
+      const card = document.getElementById(id);
+      if (!card) return;
+      const item = card.querySelector('.search-progress-item');
+      if (item) item.classList.toggle('done', !!done);
+    });
   },
 
   setupEventListeners() {
@@ -2009,6 +2073,7 @@ const PresentationApp = {
   },
 
   next() {
+    this.clearAuto();
     if (this.currentLevel === 1) {
       Level1Controller.handleNext();
     } else if (this.currentLevel === 2) {
@@ -2031,6 +2096,7 @@ const PresentationApp = {
   },
 
   prev() {
+    this.clearAuto();
     if (this.currentLevel === 1) {
       Level1Controller.handlePrev();
     } else if (this.currentLevel === 2) {
@@ -2075,6 +2141,7 @@ const PresentationApp = {
       return;
     }
 
+    this.clearAuto();
     this.currentLevel = levelNum;
 
     document.querySelectorAll('.stage-level').forEach(sec => {
@@ -2109,6 +2176,10 @@ const PresentationApp = {
     } else if (this.currentLevel === 8) {
       Level8Controller.reset();
     }
+
+    // Kick off the level's first animation automatically.
+    const startDelay = this.currentLevel === 8 ? 2400 : 1000;
+    this.scheduleAuto(startDelay);
   },
 
   notifyLevelLocked(levelNum) {

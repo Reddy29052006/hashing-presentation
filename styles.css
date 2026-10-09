@@ -896,6 +896,14 @@ body.theme-cinematic {
   }
 }
 
+/* Once a step finishes the loading spinner stops and shows a green "done" dot */
+.search-progress-item.done .pulse-indicator {
+  animation: none;
+  border-color: #22c55e;
+  border-top-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+}
+
 .search-progress-text {
   font-size: 1.25rem;
   font-weight: 700;
